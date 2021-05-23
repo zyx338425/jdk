@@ -30,6 +30,8 @@ import java.nio.*;
 import java.nio.channels.*;
 import java.nio.channels.spi.*;
 import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.ToLongBiFunction;
 
 /**
  * This class is defined here rather than in java.nio.channels.Channels
@@ -146,14 +148,28 @@ public class ChannelInputStream
     public long transferTo(OutputStream out) throws IOException {
         Objects.requireNonNull(out, "out");
 
-        if (out instanceof ChannelOutputStream cos && ch instanceof FileChannel fc && cos.channel() instanceof FileChannel dst) {
-            return transfer(fc, dst);
+        if (out instanceof ChannelOutputStream cos && ch instanceof FileChannel fc) {
+            WritableByteChannel wbc = cos.channel();
+
+            if (wbc instanceof FileChannel dst) {
+                return transfer(fc, dst);
+            }
+
+            if (wbc instanceof SelectableChannel sc) {
+                synchronized (sc.blockingLock()) {
+                    if (!sc.isBlocking())
+                        throw new IllegalBlockingModeException();
+                    return transfer(fc, wbc);
+                }
+            }
+
+            return transfer(fc, wbc);
         }
 
         return super.transferTo(out);
     }
 
-    private static long transfer(FileChannel src, FileChannel dst) throws IOException {
+    private static long transfer(FileChannel src, WritableByteChannel dst) throws IOException {
         long bytesWritten = 0L;
         long srcPos = src.position();
         try {
