@@ -44,7 +44,6 @@ echo "
 			go build
 			cd /xdd/xdd && chmod 777 xdd
 
- echo "你以为喂饭好了吗.安装已经一半完成。\n现在你需要输入命令 ： cd /xdd/xdd/ && ./xdd     运行初始化并生成配置文件demo_config.yaml， 更新User-Agent
-卡住了(第一次使用的bug，无视不管)，Ctrl+c快捷键保存，路径在/xdd/xdd/conf，和其他操作。看不懂怎么改文件,下载我修改过的使用文档\n请输入命令下载  wget -P /xdd/xdd/conf -N https://gitee.com/xiaojiu6/backups/raw/master/js/demo_config.yaml      \n修改配置文件demo_config.yaml  ##路径在/xdd/xdd/conf \n\n\ndemo_config.yaml修改完成后，保存。shel输入命令： cd /xdd/xdd/ && ./xdd\n使用qq小号机器人登录扫码，登录完成后Ctrl+c快捷键保存\n后台启动命令：cd /xdd/xdd/ && nohup ./xdd >/dev/null 2>&1 &
-\n
-\n 感谢使用！"
+ echo "半自动安装完成，感谢使用！"
+ echo "半自动安装完成，感谢使用！"
+ echo "半自动安装完成，感谢使用！"
